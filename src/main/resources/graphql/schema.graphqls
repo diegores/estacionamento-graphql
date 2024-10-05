@@ -1,0 +1,105 @@
+# Definição dos tipos principais utilizados no schema
+
+# Tipo Estabelecimento
+type Estabelecimento {
+    id: ID!
+    nome: String!
+    cnpj: String!
+    endereco: String!
+    telefone: String!
+    vagasMotos: Int!
+    vagasCarros: Int!
+    veiculos: [Veiculo]
+}
+
+# Tipo Veiculo
+type Veiculo {
+    id: ID!
+    marca: String!
+    modelo: String!
+    cor: String!
+    placa: String!
+    tipo: String!
+    estaEstacionado: Boolean!
+    estabelecimento: Estabelecimento
+}
+
+# Input para criar um novo Estabelecimento
+input EstabelecimentoInput {
+    nome: String!
+    cnpj: String!
+    endereco: String!
+    telefone: String!
+    vagasMotos: Int!
+    vagasCarros: Int!
+}
+
+# Input para atualizar um Estabelecimento existente
+input UpdateEstabelecimentoInput {
+    id: ID!
+    nome: String
+    cnpj: String
+    endereco: String
+    telefone: String
+    vagasMotos: Int
+    vagasCarros: Int
+}
+
+# Input para criar um novo Veiculo
+input VeiculoInput {
+    marca: String!
+    modelo: String!
+    cor: String!
+    placa: String!
+    tipo: String! # "CARRO" ou "MOTO"
+    estaEstacionado: Boolean!
+    estabelecimentoId: ID!
+}
+
+# Input para atualizar um Veiculo existente
+input UpdateVeiculoInput {
+    id: ID!
+    marca: String
+    modelo: String
+    cor: String
+    placa: String
+    tipo: String
+    estaEstacionado: Boolean
+    estabelecimento: UpdateEstabelecimentoInput!  # Mudança aqui
+}
+
+# Definição de Query para obter informações de Estabelecimentos e Veículos
+type Query {
+    # Consultar um Estabelecimento por ID
+    getEstabelecimento(id: ID!): Estabelecimento
+
+    # Listar todos os Estabelecimentos
+    getEstabelecimentos: [Estabelecimento]
+
+    # Consultar um Veiculo por ID
+    getVeiculo(id: ID!): Veiculo
+
+    # Listar todos os Veiculos
+    getVeiculos: [Veiculo]
+}
+
+# Definição de Mutations para criar, atualizar e deletar recursos
+type Mutation {
+    # Adicionar um novo Estabelecimento
+    saveEstabelecimento(input: EstabelecimentoInput!): Estabelecimento
+
+    # Atualizar um Estabelecimento existente
+    updateEstabelecimento(input: UpdateEstabelecimentoInput!): Estabelecimento
+
+    # Deletar um Estabelecimento por ID
+    deleteEstabelecimento(id: ID!): Boolean
+
+    # Adicionar um novo Veiculo a um Estabelecimento
+    saveVeiculo(input: VeiculoInput!): Veiculo
+
+    # Atualizar um Veiculo existente
+    updateVeiculo(input: UpdateVeiculoInput!): Veiculo
+
+    # Deletar um Veiculo por ID
+    deleteVeiculo(id: ID!): Boolean
+}

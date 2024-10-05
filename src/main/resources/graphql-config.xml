@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphql>
+    <schema-location-pattern>classpath*:graphql/*.graphqls</schema-location-pattern>
+    <schema-parser-options>
+        <option name="allowEmptySchemas" value="true"/>
+    </schema-parser-options>
+</graphql>
